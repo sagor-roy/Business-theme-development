@@ -1,0 +1,108 @@
+/*------------------------------------------------------------------
+		File Name: responsive.css
+-------------------------------------------------------------------*/
+
+@media (max-width:991px) {
+    .navbar {
+        background-color: rgba(232, 232, 232, 0.97);
+    }
+
+    .navbar-dark .navbar-nav .active > .nav-link {
+        background-color: rgba(217, 217, 217, 1);
+        padding: 10px 20px;
+    }
+
+    ul.navbar-nav > li {
+        padding: 10px 0px;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #545b62;
+    }
+
+    .navbar-brand {
+        margin-left: 1rem;
+    }
+
+    .choose_card,
+    .staff_card,
+    .feedback_card,
+    .blog-card,
+    .pricing_card {
+        margin: 15px 0;
+    }
+
+    .offer_right {
+        padding: 65px;
+    }
+
+    .offer_grid {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+    }
+
+    .blog_card > h4 {
+        font-size: 20px;
+    }
+
+}
+
+@media (min-width: 321px) and (max-width: 575px) {
+    .grid_system {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .staff_body > ul > li {
+        padding: 0 5px;
+    }
+
+    .staff_body > ul > li > a {
+        font-size: 12px;
+    }
+
+    .row_padd {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .work_right {
+        padding: 65px;
+    }
+
+    .work_grid {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+    }
+
+    .heading_title > h4 {
+        font-size: 25px;
+    }
+
+    .contact_footer_right {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    html,
+    body {
+        font-size: 14px;
+    }
+
+
+    .contact_footer_left h4 {
+        font-size: 20px;
+    }
+
+    .contact_footer_right > h4 {
+        font-size: 20px;
+    }
+
+    strong.price {
+        font-size: 30px;
+    }
+}
