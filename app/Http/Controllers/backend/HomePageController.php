@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\backend\CentralImage;
 use App\Models\backend\ChooseUs;
+use App\Models\backend\ClientComment;
+use App\Models\backend\Feedback;
 use App\Models\backend\HomeSection;
 use App\Models\backend\HomeSectionStatus;
+use App\Models\backend\HowItWork;
 use App\Models\backend\OfferSection;
+use App\Models\backend\Partner;
 use App\Models\backend\Product;
 use App\Models\backend\Staff;
 use Exception;
@@ -30,7 +35,7 @@ class HomePageController extends Controller
     }
 
     // OFFER SECTION
-    public function offer(Request $request) {
+     public function offer(Request $request) {
         if($request->status == 1) {
             $status = 'active';
         }else{
@@ -461,4 +466,178 @@ class HomePageController extends Controller
             return redirect()->back();
         }
     }
+
+    // HOW IT WORK SECTION
+    public function workHead(Request $request) {
+        try {
+            $update = HowItWork::find(1);
+            if ($request->file('img') == null) {
+                $update->head = $request->head;
+                $update->text = $request->text;
+                $update->update();
+                session()->flash('workMessage','Update Successfull');
+                return redirect()->back();
+            }else {
+                $img = $request->file('img');
+                $img_name = substr(md5(time()),0,10).'.'.$img->getClientOriginalExtension();
+                Image::make($img)->save('uploads/homepage/work/'.$img_name);
+                $output = ('uploads/homepage/work/'.$img_name);
+
+                if ($update->img == null) {
+                    return redirect()->back();
+                }else{
+                    if (file_exists(public_path($folder = $update->img))) {
+                        unlink(public_path($folder));
+                    }
+                }
+
+                $update->img = $output;
+                $update->head = $request->head;
+                $update->text = $request->text;
+                $update->update();
+                session()->flash('workMessage','Update Successfull');
+                return redirect()->back();
+            }
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // HOW IT WORK UPDATE
+    public function workUpdate(Request $request, $id) {
+        try {
+            $update = HowItWork::find($id);
+            $update->icon = $request->icon;
+            $update->title = $request->title;
+            $update->content = $request->text;
+            $update->update();
+            session()->flash('editMessage','Update Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // CLIENT COMMENT SECTION
+    public function commentStore(Request $request)
+    {
+        try {
+            $img = $request->file('img');
+            $img_name = substr(md5(time()),0,10).'.'.$img->getClientOriginalExtension();
+            Image::make($img)->save('uploads/homepage/client/'.$img_name);
+            $output = ('uploads/homepage/client/'.$img_name);
+            // STORE
+            $store = new ClientComment();
+            $store->img = $output;
+            $store->comment = $request->comment;
+            $store->name = $request->name;
+            $store->prof = $request->prof;
+            $store->save();
+            session()->flash('clientMessage','Data Inserted Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage', $error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // COMMENT DELETE
+    public function commentDelete($id) {
+        ClientComment::find($id)->delete();
+        return redirect()->back();
+    }
+
+    // CENTRAL IMG SECTION
+    public function centralImg(Request $request) {
+        try {
+            $update = CentralImage::find(1);
+            $img = $request->file('img');
+            $img_name = substr(md5(time()),0,10).'.'.$img->getClientOriginalExtension();
+            Image::make($img)->save('uploads/homepage/central/'.$img_name);
+            $output = ('uploads/homepage/central/'.$img_name);
+
+            if ($update->img == null) {
+                return redirect()->back();
+            }else{
+                if (file_exists(public_path($folder = $update->img))) {
+                    unlink(public_path($folder));
+                }
+            }
+
+            $update->img = $output;
+            $update->update();
+            session()->flash('imgMessage','Update Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // FEEDBACK SECTION
+    public function feedHead(Request $request) {
+        try {
+            $update = Feedback::find(1);
+            $update->head = $request->head;
+            $update->text = $request->text;
+            $update->update();
+            session()->flash('feedHeadMessage','Update Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // PARTNER SECTION
+    public function partnerHead(Request $request) {
+        try {
+            $update = Partner::find(1);
+            $update->head = $request->head;
+            $update->text = $request->text;
+            $update->update();
+            session()->flash('partnerMessage','Update Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // PARTNER STORE
+    public function partnerStore(Request $request) {
+        try {
+            $img = $request->file('img');
+            $img_name = substr(md5(time()),0,10).'.'.$img->getClientOriginalExtension();
+            Image::make($img)->save('uploads/homepage/partner/'.$img_name);
+            $output = ('uploads/homepage/partner/'.$img_name);
+            // STORE
+            $store = new Partner();
+            $store->img = $output;
+            $store->save();
+            session()->flash('partnerMessage','Data Inserted Successfull');
+            return redirect()->back();
+        } catch (Exception $error) {
+            session()->flash('$errorMessage',$error->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    // PARTNER DELETE
+    public function partnerDelete($id) {
+        $delete = Partner::find($id);
+        if ($delete->img == null) {
+            return redirect()->back();
+        } else {
+            if (file_exists(public_path($folder = $delete->img))) {
+                unlink(public_path($folder));
+            }
+        }
+        Partner::where('id',$id)->delete();
+        return redirect()->back();
+
+    }
+
 }

@@ -25,6 +25,21 @@
     $(document).ready(function() {
         $('#example2').DataTable();
     } );
+    // data table
+    $(document).ready(function() {
+        $('#example3').DataTable();
+    } );
+    // data table
+    $(document).ready(function() {
+        $('#example4').DataTable();
+    } );
+    // data table
+    $(document).ready(function() {
+        $('#example5').DataTable();
+    } );
+
+
+
 
 
 

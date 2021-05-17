@@ -58,9 +58,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/offer-edit/{id}',[HomePageController::class,'offerEdit'])->name('offerEdit');
     // OfferSection
     Route::get('/content-1/{id}',[BackendController::class,'icon1'])->name('icon1');
-    Route::get('/content-2/{id}',[BackendController::class,'icon2'])->name('icon2');
-    Route::get('/content-3/{id}',[BackendController::class,'icon3'])->name('icon3');
-    Route::get('/content-4/{id}',[BackendController::class,'icon4'])->name('icon4');
     // ProductSection
     Route::post('/product-head',[HomePageController::class,'proHead'])->name('proHead');
     Route::post('/product-store',[HomePageController::class,'proStore'])->name('proStore');
@@ -70,6 +67,22 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     // StaffSection
     Route::post('/staff-head',[HomePageController::class,'staffHead'])->name('staffHead');
     Route::post('/staff-store',[HomePageController::class,'staffStore'])->name('staffStore');
+    Route::get('/staff/edit/{id}',[BackendController::class,'staffEdit'])->name('staffEdit');
+    // HowItWorkSection
+    Route::post('work-head',[HomePageController::class,'workHead'])->name('workHead');
+    Route::get('work/edit/{id}',[BackendController::class,'workEdit'])->name('workEdit');
+    Route::post('work/update/{id}',[HomePageController::class,'workUpdate'])->name('workUpdate');
+    // ClientCommentSection
+    Route::post('client/comment/store',[HomePageController::class,'commentStore'])->name('commentStore');
+    Route::get('comment/delete/{id}',[HomePageController::class,'commentDelete'])->name('commentDelete');
+    // CentralImageSection
+    Route::post('central-img/update',[HomePageController::class,'centralImg'])->name('centralImg');
+    // FeedbackSection
+    Route::post('feedback-head',[HomePageController::class,'feedHead'])->name('feedHead');
+    // PartnerSection
+    Route::post('partner-head',[HomePageController::class,'partnerHead'])->name('partnerHead');
+    Route::post('partner-store',[HomePageController::class,'partnerStore'])->name('partnerStore');
+    Route::get('partner-delete/{id}',[HomePageController::class,'partnerDelete'])->name('partnerDelete');
     // ContactPage
     Route::get('/contact/detail-information/{id}',[BackendController::class,'conMessage'])->name('contactMessage');
 
